@@ -2,14 +2,9 @@
     <div>
         <b-navbar toggleable="lg" type="light" variant="light">
             <div class="container">
-                <nuxt-link class="nav-brand" to="/">Jwt-Auth</nuxt-link>
+                <span class="navbar-brand mb-0 h4">The Movie Database</span>
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                 <b-collapse id="nav-collapse" is-nav>
-                <b-navbar-nav>
-                    <li class="nav-item" v-if="authenticated">
-                        <nuxt-link class="nav-link" to="/dashboard">Dashboard</nuxt-link>
-                    </li>
-                </b-navbar-nav>
                 <b-navbar-nav class="ml-auto">
                     <template v-if="authenticated">
                         <b-nav-item-dropdown>
@@ -43,3 +38,15 @@ export default {
     }
 }
 </script>
+<style scoped>
+.nav-brand {
+    font-size: 10px;
+    color: black;
+    font-weight: 700;
+}
+.nav-item {
+    font-size: 10px;
+    color: black;
+    font-weight: 700;
+}
+</style>

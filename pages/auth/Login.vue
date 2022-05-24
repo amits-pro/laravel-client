@@ -42,7 +42,7 @@ export default {
         async login() {
             try {
                 await this.$auth.login({data: this.form});
-                his.$router.push(this.$route.query.redirect?this.$route.query.redirect:'/');
+                this.$router.push(this.$route.query.redirect?this.$route.query.redirect:'/movies');
            }
             catch(error) {
             }
