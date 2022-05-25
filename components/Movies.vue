@@ -19,7 +19,7 @@
         ></b-table>
   </div>
     <div class="container movies">
-      <div class="trending">Trending Movies</div> 
+      <div class="caption">{{query !== ''?'Searched Movies':'Trending Movies'}}</div> 
       <div id="movie-grid" class="movies-grid">
         <MovieCard class="movie" v-for="movieInfo in movies" :key="movieInfo.index" :movie="movieInfo"/>
       </div>
@@ -33,23 +33,6 @@ import axios from 'axios'
 export default {
   name: 'home',
   middleware: 'auth',
-  head() {
-    return {
-      title: 'Movie App - Latest Streaming Movie Info',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: 'Get all the latest streaming movies in theaters & online',
-        },
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: 'movies, stream, stremaing',
-        },
-      ],
-    }
-  },
   data() {
     return {
       movies: [],
@@ -63,26 +46,53 @@ export default {
   },
   watch: {
       currentPage(newValue) {
-          this.getMovies(newValue);
+          if(this.query !== '') {
+              this.searchMovies(this.query,newValue);
+          } else {
+            this.getMovies(newValue);
+          }
+      },
+      query(newValue) {
+          console.log(newValue);
+          if(newValue !== '') {
+              this.searchMovies(newValue,1);
+          } else {
+              this.getMovies(1);
+          }
       }
   },
   methods: {
       async getMovies(pageId) {
-          console.log(pageId);
         const data = await this.$axios.$get(`http://127.0.0.1:8000/api/movies/page/${pageId}`);
         this.total_pages = data.total_pages;
         this.movies = data.results;
+        this.currentPage = pageId;
+      },
+      async searchMovies(query, pageId) {
+          const data = await this.$axios.$get(`http://127.0.0.1:8000/api/search/movie?page=${pageId}&query=${query}`);
+          this.total_pages = data.total_pages;
+          this.movies = data.results;
+          this.currentPage = pageId;  
       }
   },
   computed: {
       rows() {
         return this.total_pages * this.perPage;
+      },
+      query() {
+          console.log(this.$store);
+          return this.$store.getters['movies/searchQuery'];
       }
     }  
 }
 </script>
 
 <style lang="scss">
+.caption {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
 .pager {
     margin-top: 30px;
     margin-bottom: 0;    

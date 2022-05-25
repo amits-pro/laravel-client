@@ -8,14 +8,13 @@
             <p class="review">{{ movie.vote_average }}</p>
             <!--p class="overview">{{ movie.overview }}</p> -->
           </div>
-          <div class="info">
+          <div class="info" @click.prevent="routeToDetails">
             <p class="title">
               {{ movie.title }}
             </p>  
             <p class="release">
               {{releaseYear}}
             </p>
-            <NuxtLink class="button button-light" :to="{ name: 'movies-id', params: { id: movie.id } }" > Get More Info </NuxtLink>
           </div>
     </div>
 </template>
@@ -29,7 +28,13 @@
                     return new Date(this.movie.release_date).getFullYear()
                 }
             }    
-        }  
+        },
+        methods: {
+            routeToDetails() {
+                //console.log('clicked');
+                this.$router.push({ name: 'movies-id', params: {id: this.movie.id }});
+            }
+        }
     }
     
 </script>

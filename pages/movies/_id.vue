@@ -4,9 +4,9 @@
 
   <!-- Movie Info -->
   <div v-else class="single-movie container">
-    <NuxtLink class="button" :to="{ name: 'movies' }"> Back </NuxtLink>
+    <NuxtLink class="btn btn-primary" :to="{ name: 'movies' }"> Back </NuxtLink>
     <div class="movie-info">
-      <div class="movie-img">
+      <div class="image">
         <img
           :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`"
           alt=""
@@ -48,16 +48,10 @@
 <script>
 import axios from 'axios'
 export default {
+  middleware: 'auth',
   name: 'singleMovie',
   async fetch() {
     await this.getSingleMovie()
-  },
-  // delay for fetching
-  fetchDelay: 1000,
-  head() {
-    return {
-      title: this.movie.title,
-    }
   },
   data() {
     return {
@@ -75,3 +69,23 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.movie-info {
+  position: relative;
+  display: flex;
+  padding: 5rem 0;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.movie-content {
+  width: 100%;
+  margin-left: 0;
+}
+.movie-info {
+  img {
+    width: 70%;
+    height: 30%;
+    margin-top: 0;
+  }
+}
+</style>
