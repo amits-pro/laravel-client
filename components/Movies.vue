@@ -69,7 +69,7 @@ export default {
         this.currentPage = pageId;
       },
       async searchMovies(query, pageId) {
-          const data = await this.$axios.$get(`http://127.0.0.1:8000/api/search/movie?page=${pageId}&query=${query}`);
+          const data = await this.$axios.$get(`http://127.0.0.1:8000/api/movie/search?page=${pageId}&query=${query}`);
           this.total_pages = data.total_pages;
           this.movies = data.results;
           this.currentPage = pageId;  

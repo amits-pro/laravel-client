@@ -60,11 +60,10 @@ export default {
   },
   methods: {
     async getSingleMovie() {
-      const data = axios.get(
+      const data = await this.$axios.$get(
         `http://127.0.0.1:8000/api/movies/${this.$route.params.id}`
       )
-      const result = await data
-      this.movie = result.data
+      this.movie = data
     },
   },
 }
